@@ -142,7 +142,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useReview } from '@/composables/useApi'
+import { useReview } from 'where-to-know-insights-lib/composables'
 
 const route = useRoute()
 const router = useRouter()

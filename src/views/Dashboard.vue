@@ -91,12 +91,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import BarChart from '@/components/dashboard/BarChart.vue'
-import PieChart from '@/components/dashboard/PieChart.vue'
-import LineChart from '@/components/dashboard/LineChart.vue'
-import SearchableSelect from '@/components/common/SearchableSelect.vue'
-import { useAnalytics } from '@/composables/useApi'
-import { saveDashboardPeriod, loadDashboardPeriod } from '@/utils/sessionStorage'
+import { BarChart, PieChart, LineChart, SearchableSelect } from 'where-to-know-insights-lib/components'
+import { useAnalytics } from 'where-to-know-insights-lib/composables'
+import { saveDashboardPeriod, loadDashboardPeriod } from 'where-to-know-insights-lib/utils'
 
 const router = useRouter()
 const route = useRoute()

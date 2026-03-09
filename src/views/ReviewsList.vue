@@ -268,12 +268,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useReviews, useAnalytics } from '@/composables/useApi'
-import type { ReviewsQueryParams } from '@/types/api'
-import SearchableSelect from '@/components/common/SearchableSelect.vue'
-import ReviewTable from '@/components/reviews/ReviewTable.vue'
-import ReviewCard from '@/components/reviews/ReviewCard.vue'
-import FilterPanel from '@/components/reviews/FilterPanel.vue'
+import { useReviews, useAnalytics } from 'where-to-know-insights-lib/composables'
+import type { ReviewsQueryParams } from 'where-to-know-insights-lib/types'
+import { SearchableSelect, ReviewTable, ReviewCard, FilterPanel } from 'where-to-know-insights-lib/components'
 import {
   saveReviewsFilters,
   loadReviewsFilters,
@@ -281,7 +278,7 @@ import {
   saveReviewsPagination,
   loadReviewsPagination,
   type ReviewsFilters,
-} from '@/utils/sessionStorage'
+} from 'where-to-know-insights-lib/utils'
 
 const router = useRouter()
 const route = useRoute()
