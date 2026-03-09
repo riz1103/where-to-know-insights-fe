@@ -57,6 +57,7 @@ A Vue 3 dashboard application for viewing and analyzing hotel reviews with advan
 - **Tailwind CSS** for styling and responsive design
 - **Axios** for API requests
 - **Session Storage** for client-side state persistence
+- **where-to-know-insights-lib** - Component library containing all reusable components, composables, utils, and types
 
 ## Prerequisites
 
@@ -70,6 +71,8 @@ A Vue 3 dashboard application for viewing and analyzing hotel reviews with advan
    ```bash
    npm install
    ```
+   
+   This will install all dependencies including `where-to-know-insights-lib` which provides all reusable components, composables, utilities, and types.
 
 2. **Start the development server:**
    ```bash
@@ -121,41 +124,44 @@ This ensures the backend API URL is not exposed in the browser's network console
 
 ```
 src/
-├── components/           # Reusable components organized by domain
-│   ├── common/          # Shared components
-│   │   ├── SearchableSelect.vue  # Searchable dropdown with keyboard navigation
-│   │   └── SortIcon.vue          # Sort indicator icon
-│   ├── dashboard/       # Dashboard-specific components
-│   │   ├── BarChart.vue
-│   │   ├── PieChart.vue
-│   │   └── LineChart.vue
-│   └── reviews/         # Reviews-specific components
-│       ├── FilterPanel.vue        # Filter inputs with validation
-│       ├── ReviewCard.vue         # Card view item
-│       ├── ReviewTable.vue        # Table container
-│       ├── ReviewTableRow.vue     # Table row item
-│       └── TableHeader.vue        # Sortable table header
-├── composables/         # API composables for data fetching
-│   └── useApi.ts
 ├── router/              # Vue Router configuration
 │   └── index.ts
-├── types/               # TypeScript type definitions
-│   └── api.ts
-├── utils/               # Utility functions
-│   └── sessionStorage.ts  # Session storage helpers
 ├── views/               # Page components
 │   ├── Dashboard.vue
 │   ├── ReviewsList.vue
 │   └── ReviewDetail.vue
 ├── App.vue              # Root component
-├── main.ts              # Application entry point
+├── main.ts              # Application entry point (configures API base URL)
 └── style.css            # Global styles
 ```
+
+### Library Dependency
+
+All reusable components, composables, utilities, and types are now provided by the **`where-to-know-insights-lib`** npm package:
+
+- **Components** (`where-to-know-insights-lib/components`):
+  - Common: `SearchableSelect`, `SortIcon`
+  - Dashboard: `BarChart`, `PieChart`, `LineChart`
+  - Reviews: `FilterPanel`, `ReviewCard`, `ReviewTable`, `ReviewTableRow`, `TableHeader`
+
+- **Composables** (`where-to-know-insights-lib/composables`):
+  - `useReviews()` - Fetch paginated reviews with filters
+  - `useReview()` - Fetch single review by ID
+  - `useAnalytics()` - Fetch analytics data
+  - `configureApi()` - Configure API base URL
+
+- **Utils** (`where-to-know-insights-lib/utils`):
+  - `saveReviewsFilters()`, `loadReviewsFilters()` - Session storage for filters
+  - `saveReviewsPagination()`, `loadReviewsPagination()` - Session storage for pagination
+  - `saveDashboardPeriod()`, `loadDashboardPeriod()` - Session storage for dashboard period
+
+- **Types** (`where-to-know-insights-lib/types`):
+  - `Review`, `ReviewsResponse`, `AnalyticsResponse`, `ReviewsQueryParams`, etc.
 
 ## Implementation Details
 
 ### Data Handling
-- **Composables**: Clean separation of API logic using Vue composables (`useApi`)
+- **Composables**: Clean separation of API logic using Vue composables from `where-to-know-insights-lib` (`useReviews`, `useReview`, `useAnalytics`)
 - **State Management**: Reactive state for loading, error, and data with Vue 3 Composition API
 - **Pagination**: Server-side pagination with configurable page size (10, 20, 50, 100)
 - **Filtering**: 
@@ -191,7 +197,8 @@ src/
 - **Color Schemes**: Custom color palettes for different chart types
 
 ### Component Architecture
-- **Atomic Design**: Components organized by domain (common, dashboard, reviews)
+- **Library-based**: All reusable components are provided by `where-to-know-insights-lib`
+- **Atomic Design**: Components organized by domain (common, dashboard, reviews) in the library
 - **Reusability**: 
   - `SearchableSelect`: Searchable dropdown used across all filters
   - `SortIcon`: Reusable sort indicator
@@ -200,6 +207,7 @@ src/
   - `FilterPanel`: Encapsulates all filter logic and validation
   - `ReviewTable` & `ReviewCard`: Separate view implementations
   - `TableHeader`: Individual sortable header component
+- **Application Structure**: This app focuses on page-level views (`views/`) and routing, while all shared logic lives in the library
 
 ### UX Features
 - **Responsive Design**: Mobile-friendly layout with Tailwind CSS
@@ -218,7 +226,7 @@ src/
 
 1. **Chart Library**: Chose Chart.js over ECharts for simplicity and good Vue integration. Chart.js is lighter and easier to customize for this use case. Added explicit animations for better visual appeal.
 
-2. **State Management**: Used composables instead of Pinia/Vuex for simplicity. The app is small enough that composables provide sufficient state management. Combined with session storage for persistence.
+2. **State Management**: Used composables from `where-to-know-insights-lib` instead of Pinia/Vuex for simplicity. The app is small enough that composables provide sufficient state management. Combined with session storage utilities from the library for persistence.
 
 3. **URL Query Params**: ✅ **Implemented** - All filters, pagination, sorting, and view modes are synced to URL for shareability and bookmarking.
 
@@ -228,7 +236,7 @@ src/
 
 6. **Styling**: Used Tailwind CSS utility classes for rapid development. Components are well-organized into atomic, reusable pieces.
 
-7. **Component Organization**: Organized components into `common`, `dashboard`, and `reviews` folders following atomic design principles for better maintainability.
+7. **Component Organization**: Components are organized in `where-to-know-insights-lib` into `common`, `dashboard`, and `reviews` folders following atomic design principles for better maintainability and reusability across projects.
 
 8. **API Proxy**: Implemented Vite proxy to hide backend API URL from browser network console for security.
 
